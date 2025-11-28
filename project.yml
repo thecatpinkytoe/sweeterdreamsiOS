@@ -1,0 +1,19 @@
+name: HealthExportKit
+options:
+  bundleIdPrefix: com.example
+configs:
+  Debug: debug
+  Release: release
+settings:
+  SWIFT_VERSION: 5.0
+targets:
+  HealthExportKit:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: Sources/HealthExportKit
+    resources:
+      - path: Resources
+    settings:
+      INFO_PLIST_FILE: HealthExportKit/Info.plist

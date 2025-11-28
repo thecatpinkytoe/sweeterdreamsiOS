@@ -1,0 +1,23 @@
+workflows:
+  build-and-export:
+    environment:
+      vars:
+        APP_NAME: "HealthExportKit"
+        SCHEME: "HealthExportKit"
+    scripts:
+      - name: Install xcodegen
+        script: |
+          brew install xcodegen || true
+      - name: Generate Xcode project
+        script: |
+          xcodegen generate
+      - name: Build and export IPA
+        script: |
+          set -e
+          xcodebuild -scheme "$SCHEME" -configuration Release -sdk iphoneos -archivePath $PWD/build/HealthExportKit.xcarchive archive || true
+          xcodebuild -exportArchive -archivePath $PWD/build/HealthExportKit.xcarchive -exportOptionsPlist exportOptions.plist -exportPath $PWD/build || true
+    publishing:
+      scripts:
+        - name: Upload artifacts
+          script: |
+            ls -la build || true
